@@ -24,18 +24,20 @@ public class StringProducerService {
 
         CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send("str-topic", message);
 
-        future.thenApply(success -> {
-            RecordMetadata recordMetadata = null;
-            if (success != null) {
-                log.info("Message successfully sent! {}", message);
-                log.info("Partition: {}, Offset: {}", success.getRecordMetadata().partition(), success.getRecordMetadata().offset());
-                recordMetadata = success.getRecordMetadata();
-            }
-            return recordMetadata;
-        }).exceptionally(error -> {
-            log.info("Failed to send message!");
-            return null;
-        });
+        log.info("Sent message {}", message);
+//
+//        future.thenApply(success -> {
+//            RecordMetadata recordMetadata = null;
+//            if (success != null) {
+//                log.info("Message successfully sent! {}", message);
+//                log.info("Partition: {}, Offset: {}", success.getRecordMetadata().partition(), success.getRecordMetadata().offset());
+//                recordMetadata = success.getRecordMetadata();
+//            }
+//            return recordMetadata;
+//        }).exceptionally(error -> {
+//            log.info("Failed to send message!");
+//            return null;
+//        });
     }
 }
 
