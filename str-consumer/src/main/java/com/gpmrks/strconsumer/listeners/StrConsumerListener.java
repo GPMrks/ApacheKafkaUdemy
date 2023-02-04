@@ -2,13 +2,11 @@ package com.gpmrks.strconsumer.listeners;
 
 import com.gpmrks.strconsumer.custom.StrConsumerCustomListener;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 
 @Component
 @Log4j2
-public class strConsumerListener {
+public class StrConsumerListener {
 
     @StrConsumerCustomListener(groupId = "group-1")
     public void create(String message) {
