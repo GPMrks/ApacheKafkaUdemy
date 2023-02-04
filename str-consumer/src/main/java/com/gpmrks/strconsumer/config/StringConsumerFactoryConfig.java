@@ -1,5 +1,6 @@
 package com.gpmrks.strconsumer.config;
 
+import lombok.extern.log4j.Log4j2;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +10,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.RecordInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@Log4j2
 public class StringConsumerFactoryConfig {
 
     private final KafkaProperties kafkaProperties;
@@ -38,5 +41,22 @@ public class StringConsumerFactoryConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, String> validMessageContainerFactory(ConsumerFactory<String, String> consumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory);
+        factory.setRecordInterceptor(validMessage());
+        return factory;
+    }
+
+    private RecordInterceptor<String, String> validMessage() {
+        return (consumerRecord, consumer) -> {
+            if (consumerRecord.value().contains("test")) {
+                log.info("Contains word 'test'");
+            }
+            return consumerRecord;
+        };
     }
 }
