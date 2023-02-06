@@ -4,6 +4,6 @@ import com.gpmrks.paymentservice.model.Payment;
 
 public interface IPaymentService {
 
-    void sendPayment(Payment payment);
+    void sendPayment(Payment payment) throws InterruptedException;
 
 }

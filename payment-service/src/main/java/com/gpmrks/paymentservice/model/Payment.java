@@ -1,5 +1,6 @@
 package com.gpmrks.paymentservice.model;
 
+import javax.annotation.processing.Generated;
 import java.io.Serializable;
 
 public class Payment implements Serializable {

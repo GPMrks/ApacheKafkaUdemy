@@ -21,7 +21,7 @@ public class PaymentController implements IPaymentController {
     }
 
     @Override
-    public ResponseEntity<Payment> sendPayment(Payment payment) {
+    public ResponseEntity<Payment> sendPayment(Payment payment) throws InterruptedException {
         paymentService.sendPayment(payment);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

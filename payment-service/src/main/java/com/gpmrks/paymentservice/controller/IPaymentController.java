@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface IPaymentController {
 
     @PostMapping
-    ResponseEntity<Payment> sendPayment(@RequestBody Payment payment);
+    ResponseEntity<Payment> sendPayment(@RequestBody Payment payment) throws InterruptedException;
 
 }
